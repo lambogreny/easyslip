@@ -1,21 +1,32 @@
-# EasySlip
+# EasySlip | The Ultimate Golang Library for Payment Slip Verification
 
-EasySlip is a powerful and flexible Golang library designed to streamline the process of verifying payment slips through various methods, including file uploads, Base64 data, string payloads, and TrueMoney Wallet integration. This library makes it easier for businesses to integrate payment verification into their systems with high accuracy and reliability.
+**EasySlip** is your go-to **Golang library** for secure and efficient **payment slip verification**, supporting:
+- **File uploads**
+- **Base64 data**
+- **String payloads**
+- **TrueMoney Wallet integration**
+
+Whether you're a startup or an enterprise, EasySlip streamlines payment validation with **accuracy**, **reliability**, and **scalability**.
+
+> 🌏 **ภาษาไทย**: EasySlip เป็นไลบรารี Golang ที่ช่วยยืนยันสลิปการชำระเงิน รองรับไฟล์ Base64 String Payload และ TrueMoney Wallet สำหรับธุรกิจทุกขนาด
 
 ---
 
-## Features
+## 🚀 Why Choose EasySlip?
 
-- **Comprehensive Slip Verification**: Supports file, Base64, string payload, and TrueMoney Wallet slip verification.
-- **High Compatibility**: Easily integrates with any Golang application.
-- **Robust Error Handling**: Provides detailed error messages to help diagnose and resolve issues.
-- **Secure and Scalable**: Designed for enterprise use with secure API interactions.
+- **Comprehensive Verification**: Supports multiple methods to suit diverse use cases.
+- **Seamless Integration**: Plug-and-play with any Golang application.
+- **Robust Security**: Built with enterprise-grade encryption and API security.
+- **Scalable**: Handles high transaction volumes with ease.
+- **Error Transparency**: Provides clear and actionable error messages.
+
+> **Keywords for SEO**: Golang library, payment slip verification, TrueMoney Wallet, Base64 validation, secure APIs.
 
 ---
 
-## Installation
+## 🔧 Installation
 
-To start using EasySlip, simply add it to your project:
+Add EasySlip to your Golang project:
 
 ```bash
 go get github.com/lambogreny/easyslip
@@ -23,27 +34,31 @@ go get github.com/lambogreny/easyslip
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
-- `pkg/easyslip/models.go`: Defines data structures for requests and responses.
-- `pkg/easyslip/client.go`: Manages API client creation and HTTP requests.
-- `pkg/easyslip/verify.go`: General slip verification through file uploads.
-- `pkg/easyslip/verify_truewallet.go`: Verification for TrueMoney Wallet slips.
-- `pkg/easyslip/verify_by_base64.go`: Verification through Base64-encoded data.
-- `pkg/easyslip/verify_by_payload.go`: Verification using string payloads.
-- `pkg/easyslip/errors.go`: Handles errors returned by the API.
+| File                           | Description                                                   |
+|--------------------------------|---------------------------------------------------------------|
+| `pkg/easyslip/models.go`       | Defines data models for requests and responses.               |
+| `pkg/easyslip/client.go`       | Manages API client creation and HTTP requests.                |
+| `pkg/easyslip/verify.go`       | Handles general slip verification through file uploads.       |
+| `pkg/easyslip/verify_by_base64.go` | Processes Base64-encoded slip verification.                |
+| `pkg/easyslip/verify_by_payload.go`| Verifies slips using string payloads.                    |
+| `pkg/easyslip/verify_truewallet.go`| Manages TrueMoney Wallet slip verification.               |
+| `pkg/easyslip/errors.go`       | Provides error-handling utilities.                           |
 
 ---
 
-## Usage Examples
+## 🧑‍💻 Usage Examples
 
-### 1. Initializing the Client
+### 1️⃣ Initialize the Client
 
 ```go
 client := easyslip.NewClient("https://api.easyslip.com", "your_api_key")
 ```
 
-### 2. Verifying a Slip Using a File
+---
+
+### 2️⃣ Verify a Payment Slip Using a File
 
 ```go
 file, err := os.Open("slip.jpg")
@@ -61,7 +76,9 @@ fmt.Printf("Verification result: %+v
 ", resp)
 ```
 
-### 3. Verifying a Slip Using Base64 Data
+---
+
+### 3️⃣ Verify a Slip Using Base64 Data
 
 ```go
 base64Data := "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
@@ -74,32 +91,36 @@ fmt.Printf("Verification result: %+v
 ", resp)
 ```
 
-### 4. Verifying a Slip Using a String Payload
+---
+
+### 4️⃣ Verify a Slip Using String Payload
 
 ```go
 payload := "your_encoded_payload_string"
 
 resp, err := client.VerifySlipByPayload(context.Background(), payload)
 if err != nil {
-panic(err)
+    panic(err)
 }
 
 fmt.Printf("Payload verification result: %+v
 ", resp)
 ```
 
-### 5. Verifying a TrueMoney Wallet Slip
+---
+
+### 5️⃣ Verify a TrueMoney Wallet Slip
 
 ```go
 file, err := os.Open("truemoney_slip.jpg")
 if err != nil {
-panic(err)
+    panic(err)
 }
 defer file.Close()
 
 resp, err := client.VerifyTrueWalletSlip(context.Background(), file, "truemoney_slip.jpg")
 if err != nil {
-panic(err)
+    panic(err)
 }
 
 fmt.Printf("TrueMoney Wallet verification result: %+v
@@ -108,46 +129,48 @@ fmt.Printf("TrueMoney Wallet verification result: %+v
 
 ---
 
-## Error Handling
-
-EasySlip provides detailed error responses for every API call:
+## ⚙️ Error Handling
 
 ```go
 if err != nil {
-fmt.Printf("Error: %s
+    fmt.Printf("Error: %s
 ", err)
 }
 ```
 
 ---
 
-## Debugging Tips
+## 🛠️ Debugging Tips
 
-- **Check API Keys**: Ensure your API key is valid and properly configured.
-- **Inspect HTTP Requests**: Use tools like Postman, curl, or Wireshark to analyze API calls.
-- **Enable Logging**: Add debug flags to your application to track detailed logs.
+- **Check API Keys**: Ensure your API key is valid.
+- **Inspect HTTP Requests**: Use tools like Postman, curl, or Wireshark.
+- **Enable Logging**: Add debug flags in your application.
 
 ---
 
-## Contributing
+## 🤝 Contributions
 
-We welcome contributions! To contribute:
+We welcome developers to contribute to EasySlip! Here's how:
 
 1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Commit and push your changes.
+2. Create a branch for your changes.
+3. Commit your updates.
 4. Open a pull request.
 
----
-
-## License
-
-This project is licensed under the MIT License.
+> **ภาษาไทย**: ร่วมพัฒนา EasySlip ได้ง่ายๆ!
 
 ---
 
-## Support
+## 📜 License
 
-For support, contact:
-- Email: support@easyslip.com
-- Documentation: [EasySlip Docs](https://document.easyslip.com)
+This project is licensed under the **MIT License**.
+
+---
+
+## 📞 Support
+
+For assistance, contact:
+- **Email**: support@easyslip.com
+- **Documentation**: [EasySlip Docs](https://document.easyslip.com)
+
+> 🔥 Maximize your payment verification efficiency today with EasySlip!
