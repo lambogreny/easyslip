@@ -1,108 +1,106 @@
 # EasySlip
 
-EasySlip is a lightweight and efficient system designed for verifying payment slips. It simplifies the process of validating transactions, ensuring fast and reliable verification for businesses of all sizes.
+EasySlip is a Golang library designed to simplify the process of verifying bank slips through an HTTP API. It supports various methods to verify slips efficiently and accurately, making it a valuable tool for businesses requiring automated payment validation.
 
 ---
 
 ## Features
 
-- **Slip Verification**: Automatically verify payment slips with high accuracy.
-- **Easy Integration**: Integrate the API into your existing system with minimal effort.
-- **Customizable**: Supports various configurations for business-specific requirements.
-- **Secure**: Built with robust security measures to protect sensitive transaction data.
+- **Slip Verification**: Send images of payment slips for validation through API calls.
+- **Flexible Inputs**: Supports multiple verification methods (base64, payload, and file uploads).
+- **Error Handling**: Provides clear error messages for failed verifications.
+- **Seamless Integration**: Easily integrate with any Golang application.
 
 ---
 
 ## Installation
 
-To set up EasySlip, follow these steps:
+To use EasySlip, add it to your Go module:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/lambogreny/easyslip.git
-   cd easyslip
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   # or if you're using another package manager
-   yarn install
-   ```
-
-3. Configure environment variables:
-   Create a `.env` file in the root directory and add the necessary configuration:
-   ```env
-   DATABASE_URL=your_database_url
-   API_KEY=your_api_key
-   ```
-
-4. Start the server:
-   ```bash
-   npm start
-   ```
+```bash
+go get github.com/lambogreny/easyslip
+```
 
 ---
 
 ## Usage
 
-### API Endpoints
+### Basic Example
 
-#### Verify Slip
-**Endpoint**: `POST /api/verify-slip`
+```go
+package main
 
-**Request Body**:
-```json
-{
-  "transaction_id": "1234567890",
-  "amount": 150.00,
-  "timestamp": "2024-11-29T10:00:00Z"
+import (
+    "context"
+    "os"
+    "github.com/lambogreny/easyslip/pkg/easyslip"
+)
+
+func main() {
+    client := easyslip.NewClient("https://api.easyslip.com", nil)
+
+    // Open a slip image
+    file, err := os.Open("slip.jpg")
+    if err != nil {
+        panic(err)
+    }
+    defer file.Close()
+
+    // Verify the slip
+    resp, err := client.VerifySlip(context.Background(), file, "slip.jpg")
+    if err != nil {
+        panic(err)
+    }
+
+    // Print the result
+    fmt.Printf("Verification result: %+v
+", resp)
 }
 ```
+
+### Other Methods
+
+- **Verify by Base64**: Use `VerifyByBase64` for slips in base64 format.
+- **Verify by Payload**: Use `VerifyByPayload` for JSON payload verification.
+
+---
+
+## API Endpoints
+
+The library communicates with the EasySlip API. Below is an example of a request:
+
+**Endpoint**: `POST /verify`
+
+**Request**:
+- **Form Data**: File upload with field `file`
 
 **Response**:
 ```json
 {
-  "status": "success",
-  "message": "Slip verified successfully",
+  "status": 200,
+  "message": "Verification successful",
   "data": {
-    "transaction_id": "1234567890",
     "verified": true
   }
 }
-```
-
-### Example Integration
-
-You can integrate EasySlip into your system by sending a POST request using your favorite HTTP client (e.g., Axios, cURL).
-
-**cURL Example**:
-```bash
-curl -X POST https://api.easyslip.com/api/verify-slip \
--H "Content-Type: application/json" \
--d '{
-  "transaction_id": "1234567890",
-  "amount": 150.00,
-  "timestamp": "2024-11-29T10:00:00Z"
-}'
 ```
 
 ---
 
 ## Contributing
 
-We welcome contributions! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 
 ## Contact
 
-For questions or support, please contact us at:
+For more information or support, reach out to:
 - Email: support@easyslip.com
 - Website: [EasySlip](https://easyslip.com)
