@@ -5,12 +5,11 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"github.com/lambogreny/easyslip/pkg/easyslip"
 	"io/ioutil"
 	"log"
 	"os"
 	"time"
-
-	"your-module/pkg/easyslip"
 )
 
 func main() {
