@@ -1,12 +1,12 @@
 # EasySlip
 
-EasySlip is a powerful and flexible Golang library designed to streamline the process of verifying payment slips through various methods, including file uploads, Base64 data, JSON payloads, and TrueMoney Wallet integration. This library makes it easier for businesses to integrate payment verification into their systems with high accuracy and reliability.
+EasySlip is a powerful and flexible Golang library designed to streamline the process of verifying payment slips through various methods, including file uploads, Base64 data, string payloads, and TrueMoney Wallet integration. This library makes it easier for businesses to integrate payment verification into their systems with high accuracy and reliability.
 
 ---
 
 ## Features
 
-- **Comprehensive Slip Verification**: Supports file, Base64, payload, and TrueMoney Wallet slip verification.
+- **Comprehensive Slip Verification**: Supports file, Base64, string payload, and TrueMoney Wallet slip verification.
 - **High Compatibility**: Easily integrates with any Golang application.
 - **Robust Error Handling**: Provides detailed error messages to help diagnose and resolve issues.
 - **Secure and Scalable**: Designed for enterprise use with secure API interactions.
@@ -30,7 +30,7 @@ go get github.com/lambogreny/easyslip
 - `pkg/easyslip/verify.go`: General slip verification through file uploads.
 - `pkg/easyslip/verify_truewallet.go`: Verification for TrueMoney Wallet slips.
 - `pkg/easyslip/verify_by_base64.go`: Verification through Base64-encoded data.
-- `pkg/easyslip/verify_by_payload.go`: Verification using JSON payloads.
+- `pkg/easyslip/verify_by_payload.go`: Verification using string payloads.
 - `pkg/easyslip/errors.go`: Handles errors returned by the API.
 
 ---
@@ -74,17 +74,14 @@ fmt.Printf("Verification result: %+v
 ", resp)
 ```
 
-### 4. Verifying a Slip Using JSON Payload
+### 4. Verifying a Slip Using a String Payload
 
 ```go
-payload := easyslip.Payload{
-    TransactionID: "1234567890",
-    Amount:        150.00,
-    Timestamp:     "2024-11-29T10:00:00Z",
-}
-resp, err := client.VerifyByPayload(context.Background(), payload)
+payload := "your_encoded_payload_string"
+
+resp, err := client.VerifySlipByPayload(context.Background(), payload)
 if err != nil {
-    panic(err)
+panic(err)
 }
 
 fmt.Printf("Payload verification result: %+v
@@ -96,13 +93,13 @@ fmt.Printf("Payload verification result: %+v
 ```go
 file, err := os.Open("truemoney_slip.jpg")
 if err != nil {
-    panic(err)
+panic(err)
 }
 defer file.Close()
 
 resp, err := client.VerifyTrueWalletSlip(context.Background(), file, "truemoney_slip.jpg")
 if err != nil {
-    panic(err)
+panic(err)
 }
 
 fmt.Printf("TrueMoney Wallet verification result: %+v
@@ -117,7 +114,7 @@ EasySlip provides detailed error responses for every API call:
 
 ```go
 if err != nil {
-    fmt.Printf("Error: %s
+fmt.Printf("Error: %s
 ", err)
 }
 ```
