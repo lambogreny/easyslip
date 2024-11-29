@@ -1,22 +1,21 @@
 # EasySlip
 
-EasySlip is a Golang library designed to simplify the process of verifying bank slips through an HTTP API. It supports various methods to verify slips efficiently and accurately, making it a valuable tool for businesses requiring automated payment validation.
+EasySlip is a powerful and flexible Golang library designed to streamline the process of verifying payment slips through various methods, including file uploads, Base64 data, JSON payloads, and TrueMoney Wallet integration. This library makes it easier for businesses to integrate payment verification into their systems with high accuracy and reliability.
 
 ---
 
 ## Features
 
-- **Slip Verification**: Send images of payment slips for validation through API calls.
-- **Flexible Inputs**: Supports multiple verification methods (base64, payload, and file uploads).
-- **TrueMoney Wallet Support**: Verify TrueMoney Wallet slips with ease.
-- **Error Handling**: Provides clear error messages for failed verifications.
-- **Seamless Integration**: Easily integrate with any Golang application.
+- **Comprehensive Slip Verification**: Supports file, Base64, payload, and TrueMoney Wallet slip verification.
+- **High Compatibility**: Easily integrates with any Golang application.
+- **Robust Error Handling**: Provides detailed error messages to help diagnose and resolve issues.
+- **Secure and Scalable**: Designed for enterprise use with secure API interactions.
 
 ---
 
 ## Installation
 
-To use EasySlip, add it to your Go module:
+To start using EasySlip, simply add it to your project:
 
 ```bash
 go get github.com/lambogreny/easyslip
@@ -24,19 +23,27 @@ go get github.com/lambogreny/easyslip
 
 ---
 
-## Usage
+## Project Structure
 
-### Initializing the Client with an API Key
+- `pkg/easyslip/models.go`: Defines data structures for requests and responses.
+- `pkg/easyslip/client.go`: Manages API client creation and HTTP requests.
+- `pkg/easyslip/verify.go`: General slip verification through file uploads.
+- `pkg/easyslip/verify_truewallet.go`: Verification for TrueMoney Wallet slips.
+- `pkg/easyslip/verify_by_base64.go`: Verification through Base64-encoded data.
+- `pkg/easyslip/verify_by_payload.go`: Verification using JSON payloads.
+- `pkg/easyslip/errors.go`: Handles errors returned by the API.
 
-To use EasySlip, you need to initialize the client with your API key:
+---
+
+## Usage Examples
+
+### 1. Initializing the Client
 
 ```go
 client := easyslip.NewClient("https://api.easyslip.com", "your_api_key")
 ```
 
-### Verification Examples
-
-#### Verify Slip Using File
+### 2. Verifying a Slip Using a File
 
 ```go
 file, err := os.Open("slip.jpg")
@@ -54,7 +61,7 @@ fmt.Printf("Verification result: %+v
 ", resp)
 ```
 
-#### Verify Slip Using Base64
+### 3. Verifying a Slip Using Base64 Data
 
 ```go
 base64Data := "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
@@ -67,7 +74,7 @@ fmt.Printf("Verification result: %+v
 ", resp)
 ```
 
-#### Verify Slip Using Payload
+### 4. Verifying a Slip Using JSON Payload
 
 ```go
 payload := easyslip.Payload{
@@ -80,11 +87,11 @@ if err != nil {
     panic(err)
 }
 
-fmt.Printf("Verification result: %+v
+fmt.Printf("Payload verification result: %+v
 ", resp)
 ```
 
-#### Verify TrueMoney Wallet Slip
+### 5. Verifying a TrueMoney Wallet Slip
 
 ```go
 file, err := os.Open("truemoney_slip.jpg")
@@ -104,33 +111,35 @@ fmt.Printf("TrueMoney Wallet verification result: %+v
 
 ---
 
-## API Endpoints
+## Error Handling
 
-The library communicates with the EasySlip API. Below is an example of a request:
+EasySlip provides detailed error responses for every API call:
 
-**Endpoint**: `POST /verify`
-
-**Request**:
-- **Form Data**: File upload with field `file`
-- **Base64**: JSON payload with a base64-encoded string
-- **Payload**: JSON payload containing transaction details
-
-**Response**:
-```json
-{
-   "status": 200,
-   "message": "Verification successful",
-   "data": {
-      "verified": true
-   }
+```go
+if err != nil {
+    fmt.Printf("Error: %s
+", err)
 }
 ```
 
 ---
 
+## Debugging Tips
+
+- **Check API Keys**: Ensure your API key is valid and properly configured.
+- **Inspect HTTP Requests**: Use tools like Postman, curl, or Wireshark to analyze API calls.
+- **Enable Logging**: Add debug flags to your application to track detailed logs.
+
+---
+
 ## Contributing
 
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+We welcome contributions! To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Commit and push your changes.
+4. Open a pull request.
 
 ---
 
@@ -140,8 +149,8 @@ This project is licensed under the MIT License.
 
 ---
 
-## Contact
+## Support
 
-For more information or support, reach out to:
+For support, contact:
 - Email: support@easyslip.com
-- Website: [EasySlip](https://easyslip.com)
+- Documentation: [EasySlip Docs](https://document.easyslip.com)
